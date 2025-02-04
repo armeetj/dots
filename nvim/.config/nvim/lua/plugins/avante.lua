@@ -6,6 +6,21 @@ return {
   opts = {
     -- add any opts here
     provider = 'copilot',
+    behaviour = {
+      auto_suggestions = false,
+      -- support_paste_from_clipboard = true,
+    },
+    hints = {
+      enabled = true,
+    },
+    windows = {
+      sidebar_header = {
+        rounded = false,
+      },
+      edit = {
+        border = 'single',
+      },
+    },
   },
   -- if you want to download pre-built binary, then pass source=false. Make sure to follow instruction above.
   -- Also note that downloading prebuilt binary is a lot faster comparing to compiling from source.

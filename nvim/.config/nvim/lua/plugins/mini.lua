@@ -30,7 +30,7 @@ return { -- Collection of various small independent plugins/modules
 
     require('mini.pairs').setup()
 
-    require('mini.completion').setup()
+    require('mini.completion').setup() -- parameter signatures help
 
     require('mini.icons').setup()
 
@@ -60,9 +60,9 @@ return { -- Collection of various small independent plugins/modules
     --   return '%2l:%-2v'
     -- end
 
-    require('mini.files').setup {}
+    -- require('mini.files').setup {}
 
-    vim.keymap.set('n', '<leader>e', require('mini.files').open, { desc = 'Open Mini File Explorer' })
+    -- vim.keymap.set('n', '<leader>e', require('mini.files').open, { desc = 'Open Mini File Explorer' })
 
     -- ... and there is more!
     --  Check out: https://github.com/echasnovski/mini.nvim

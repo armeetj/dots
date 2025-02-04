@@ -7,6 +7,9 @@ return {
   ---@type render.md.UserConfig
   opts = {
     file_types = { 'markdown', 'Avante' },
+    heading = {
+      enabled = true,
+    },
   },
   ft = { 'markdown', 'Avante' },
 }

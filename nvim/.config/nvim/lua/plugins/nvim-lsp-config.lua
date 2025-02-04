@@ -47,6 +47,22 @@ return {
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
       callback = function(event)
+        -- vim diagnostic config
+        vim.diagnostic.config {
+          signs = true, -- Ensure signs are enabled
+          underline = true,
+          virtual_text = {
+            source = true,
+            severity = { min = vim.diagnostic.severity.HINT },
+          },
+          float = {
+            source = true,
+            -- border = 'single',
+          },
+          update_in_insert = false,
+          severity_sort = true,
+        }
+
         -- NOTE: Remember that Lua is a real programming language, and as such it is possible
         -- to define small helper and utility functions so you don't have to repeat yourself.
         --
@@ -57,6 +73,9 @@ return {
           vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
 
+        -- Jump to the type definition of the word under your cursor.
+        --  This is where the class/type was defined.
+        map('gt', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype Definition')
         -- Jump to the definition of the word under your cursor.
         --  This is where a variable was first declared, or where a function is defined, etc.
         --  To jump back, press <C-t>.
@@ -72,7 +91,7 @@ return {
         -- Jump to the type of the word under your cursor.
         --  Useful when you're not sure what type a variable is and you want to see
         --  the definition of its *type*, not where it was *defined*.
-        map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+        -- map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
 
         -- Fuzzy find all the symbols in your current document.
         --  Symbols are things like variables, functions, types, etc.
@@ -102,6 +121,7 @@ return {
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
           local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
             group = highlight_augroup,

@@ -18,6 +18,11 @@ return { -- Fuzzy Finder (files, lsp, etc)
       end,
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
+    {
+      -- search grep args (like search within files of certain extension)
+      'nvim-telescope/telescope-live-grep-args.nvim',
+      version = '^1.0.0',
+    },
 
     -- Useful for getting pretty icons, but requires a Nerd Font.
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
@@ -58,6 +63,19 @@ return { -- Fuzzy Finder (files, lsp, etc)
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
         },
+
+        {
+          border = {
+            prompt = { 1, 1, 1, 1 },
+            results = { 1, 1, 1, 1 },
+            preview = { 1, 1, 1, 1 },
+          },
+          borderchars = {
+            prompt = { ' ', ' ', '─', '│', '│', ' ', '─', '└' },
+            results = { '─', ' ', ' ', '│', '┌', '─', ' ', '│' },
+            preview = { '─', '│', '─', '│', '┬', '┐', '┘', '┴' },
+          },
+        },
       },
     }
 
@@ -72,7 +90,11 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
     vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
     vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-    vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+    vim.keymap.set('n', '<leader>st', vim.lsp.buf.type_definition, { desc = '[S]earch ord' })
+    vim.keymap.set('n', '<leader>sg', function()
+      require('telescope').extensions.live_grep_args.live_grep_args()
+    end, { desc = '[S]earch by [G]rep with arguments' })
+    -- vim.keymap.set('n', '<leader>sG', builtin.live_grep, { desc = '[S]earch by [G]rep' })
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
     vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
