@@ -49,10 +49,12 @@ return {
       callback = function(event)
         -- vim diagnostic config
         vim.diagnostic.config {
+
           signs = true, -- Ensure signs are enabled
           underline = true,
           virtual_text = {
             source = true,
+            prefix = '■', -- Could be '●', '▎', 'x'
             severity = { min = vim.diagnostic.severity.HINT },
           },
           float = {

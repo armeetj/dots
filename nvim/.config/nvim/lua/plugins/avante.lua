@@ -8,7 +8,7 @@ return {
     provider = 'copilot',
     behaviour = {
       auto_suggestions = false,
-      -- support_paste_from_clipboard = true,
+      support_paste_from_clipboard = true,
     },
     hints = {
       enabled = true,
