@@ -2,15 +2,18 @@ return {
   'stevearc/dressing.nvim',
   opts = {
     input = {
-      border = 'none',
+      border = 'single',
     },
     nui = {
       border = {
         style = 'single',
       },
     },
-
     builtin = {
+      border = 'single',
+    },
+
+    telescope = {
       border = 'single',
     },
   },

@@ -11,20 +11,13 @@ return {
   },
   config = function()
     local snipe = require 'snipe'
-    -- snipe.ui_select_menu = require('snipe.menu'):new { position = 'center' }
-    -- snipe.ui_select_menu:add_new_buffer_callback(function(m)
-    --   vim.keymap.set('n', '<esc>', function()
-    --     m:close()
-    --   end, { nowait = true, buffer = m.buf })
-    -- end)
-    -- vim.ui.select = snipe.ui_select
     snipe.setup {
       hints = {
         -- Characters to use for hints
         -- make sure they don't collide with the navigation keymaps
         -- If you remove `j` and `k` from below, you can navigate in the plugin
         -- dictionary = 'saflewcmpghio',
-        dictionary = 'asfghl;wertyuiop',
+        dictionary = '1234567890asfghl;wertyuiop',
       },
       navigate = {
         -- In case you changed your mind, provide a keybind that lets you

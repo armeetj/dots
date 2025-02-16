@@ -53,28 +53,18 @@ return { -- Fuzzy Finder (files, lsp, etc)
       -- You can put your default mappings / updates / etc. in here
       --  All the info you're looking for is in `:help telescope.setup()`
       --
-      -- defaults = {
-      --   mappings = {
-      --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-      --   },
-      -- },
+      defaults = {
+        border = true,
+        borderchars = {
+          prompt = { ' ', ' ', '─', '│', '│', ' ', '─', '└' },
+          results = { '─', ' ', ' ', '│', '┌', '─', ' ', '│' },
+          preview = { '─', '│', '─', '│', '┬', '┐', '┘', '┴' },
+        },
+      },
       -- pickers = {}
       extensions = {
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
-        },
-
-        {
-          border = {
-            prompt = { 1, 1, 1, 1 },
-            results = { 1, 1, 1, 1 },
-            preview = { 1, 1, 1, 1 },
-          },
-          borderchars = {
-            prompt = { ' ', ' ', '─', '│', '│', ' ', '─', '└' },
-            results = { '─', ' ', ' ', '│', '┌', '─', ' ', '│' },
-            preview = { '─', '│', '─', '│', '┬', '┐', '┘', '┴' },
-          },
         },
       },
     }
@@ -104,8 +94,13 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>/', function()
       -- You can pass additional configuration to Telescope to change the theme, layout, etc.
       builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-        winblend = 10,
+        -- border = 'none',
+        -- winblend = 10,
         previewer = false,
+        -- layout_strategy = 'horizontal',
+        -- layout_config = {
+        --   preview_width = 0.5,
+        -- },
       })
     end, { desc = '[/] Fuzzily search in current buffer' })
 

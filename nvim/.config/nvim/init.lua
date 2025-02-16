@@ -3,13 +3,25 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
+-- Indentation
+-- expand tab input with spaces characters
+vim.o.expandtab = true
+vim.o.smartindent = true
+
+-- set cursor
+vim.opt.guicursor = 'n-v-c-i:block'
+-- set line numbers
 vim.opt.number = true
 -- vim.opt.spell = true
 vim.opt.relativenumber = true
+-- enable mouse mode
 vim.opt.mouse = 'a'
+-- we have statusline alread
 vim.opt.showmode = false
 -- status line hack (so avante doesn't show statuslines)
 vim.opt.laststatus = 3
+-- set colorcolumn rulers
+-- vim.opt.colorcolumn = '90'
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -110,8 +122,10 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+-- FIXME: remove (old chadrc config)
 -- put this in your main init.lua file ( before lazy setup )
-vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46_cache/'
+-- vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46_cache/'
+--
 require('lazy').setup({
   -- { import = 'themes' },
   { import = 'plugins' },
@@ -136,6 +150,7 @@ require('lazy').setup({
   },
 })
 
-for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
-  dofile(vim.g.base46_cache .. v)
-end
+-- FIXME: remove (old chadrc config)
+-- for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
+--   dofile(vim.g.base46_cache .. v)
+-- end

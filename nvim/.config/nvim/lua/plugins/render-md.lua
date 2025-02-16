@@ -9,6 +9,7 @@ return {
     file_types = { 'markdown', 'Avante' },
     heading = {
       enabled = true,
+      width = 'block',
     },
   },
   ft = { 'markdown', 'Avante' },

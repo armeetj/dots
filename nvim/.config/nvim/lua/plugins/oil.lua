@@ -19,5 +19,6 @@ return {
       skip_confirm_for_simple_edits = true,
     }
     vim.keymap.set('n', '<leader>e', require('oil').open, { desc = 'Open Oil File Explorer' })
+    vim.keymap.set('n', '-', require('oil').open, { desc = 'Open Oil File Explorer' })
   end,
 }
