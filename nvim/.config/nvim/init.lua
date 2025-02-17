@@ -70,6 +70,12 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+-- Smoother scrolling
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Center cursor after moving down half-page' })
+vim.keymap.set('n', 'H', '<C-u>zz', { desc = 'Center cursor after moving down half-page' })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Center cursor after moving down half-page' })
+vim.keymap.set('n', 'L', '<C-d>zz', { desc = 'Center cursor after moving down half-page' })
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -125,7 +131,8 @@ vim.opt.rtp:prepend(lazypath)
 -- FIXME: remove (old chadrc config)
 -- put this in your main init.lua file ( before lazy setup )
 -- vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46_cache/'
---
+
+-- lazy setup
 require('lazy').setup({
   -- { import = 'themes' },
   { import = 'plugins' },

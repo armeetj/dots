@@ -11,12 +11,10 @@ return {
   },
   config = function()
     local snipe = require 'snipe'
+
     snipe.setup {
       hints = {
         -- Characters to use for hints
-        -- make sure they don't collide with the navigation keymaps
-        -- If you remove `j` and `k` from below, you can navigate in the plugin
-        -- dictionary = 'saflewcmpghio',
         dictionary = '1234567890asfghl;wertyuiop',
       },
       navigate = {
@@ -29,6 +27,15 @@ return {
         -- Close the buffer under the cursor
         -- NOTE: Make sure you don't use the character below on your dictionary
         close_buffer = 'd',
+
+        -- Open buffer in vertical split
+        open_vsplit = 'v',
+
+        -- Open buffer in split, based on `vim.opt.splitbelow`
+        open_split = 'h',
+
+        -- Change tag manually
+        change_tag = 'c',
       },
       -- Define the way buffers are sorted by default
       -- Can be any of "default" (sort buffers by their number) or "last" (sort buffers by last accessed)
@@ -47,5 +54,15 @@ return {
     --   }),
     --   { desc = "[P]Snipe" }
     -- )
+    --
+    --
+    -- wrap vim ui select with snipe
+    snipe.ui_select_menu = require('snipe.menu'):new { position = 'center' }
+    snipe.ui_select_menu:add_new_buffer_callback(function(m)
+      vim.keymap.set('n', '<esc>', function()
+        m:close()
+      end, { nowait = true, buffer = m.buf })
+    end)
+    vim.ui.select = snipe.ui_select
   end,
 }
