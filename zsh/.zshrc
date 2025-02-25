@@ -75,6 +75,9 @@ alias sketchybarc="nvim ~/.config/sketchybar/sketchybarrc"
 alias lazygitc="nvim ~/.config/lazygit/config.yml"
 alias gitc="nvim ~/.gitconfig"
 
+# ==> env aliases
+alias uvs="source .venv/bin/activate"
+
 # ==> Configuration (local machine specific)
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 

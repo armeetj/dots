@@ -4,17 +4,15 @@ return {
     input = {
       border = 'single',
     },
-    nui = {
-      border = {
-        style = 'single',
+    select = {
+      nui = {
+        border = {
+          style = 'single',
+        },
       },
-    },
-    builtin = {
-      border = 'single',
-    },
-
-    telescope = {
-      border = 'single',
+      builtin = {
+        border = 'single',
+      },
     },
   },
 }

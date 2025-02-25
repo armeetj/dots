@@ -11,14 +11,26 @@ return {
       view_options = { show_hidden = true },
       columns = {
         'icon',
-        -- "size",
-        -- "mtime",
+        'permissions',
+        'size',
+        'mtime',
       },
 
       delete_to_trash = true,
       skip_confirm_for_simple_edits = true,
+      confirmation = {
+        border = 'single',
+      },
+      progress = {
+        border = 'single',
+      },
+      ssh = {
+        border = 'single',
+      },
+      keymaps_help = {
+        border = 'single',
+      },
     }
-    vim.keymap.set('n', '<leader>e', require('oil').open, { desc = 'Open Oil File Explorer' })
     vim.keymap.set('n', '-', require('oil').open, { desc = 'Open Oil File Explorer' })
   end,
 }

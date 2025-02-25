@@ -11,13 +11,13 @@ after-login-command = []
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 
-# JankyBorders :: (disabled)
-# after-startup-command = [
-#   'exec-and-forget borders active_color=0xffa6b6 inactive_color=0xff494d64 style="square" width=5.0',
-# ]
-
 # Sketchybar :: customizable menu bar
-after-startup-command = ['exec-and-forget sketchybar']
+# JankyBorders :: window borders (disabled)
+after-startup-command = [
+  'exec-and-forget sketchybar',
+  'exec-and-forget sketchybar --reload',
+  # 'exec-and-forget borders active_color=0xffa6b6 inactive_color=0xff494d64 style="square" width=5.0',
+]
 # Sketchybar :: notify on workspace change
 exec-on-workspace-change = [
   '/bin/bash',
@@ -50,7 +50,7 @@ default-root-container-orientation = 'auto'
 # See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+# on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 on-focus-changed = ['move-mouse window-lazy-center']
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
@@ -119,10 +119,11 @@ alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
-alt-j = 'focus --boundaries-action wrap-around-the-workspace down'
-alt-k = 'focus --boundaries-action wrap-around-the-workspace up'
-alt-l = 'focus --boundaries-action wrap-around-the-workspace right'
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+# alt-l = 'focus --boundaries-action wrap-around-the-workspace right' # if you want to wrap
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move
 alt-shift-h = 'move left'
@@ -178,8 +179,11 @@ alt-tab = 'workspace-back-and-forth'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
+# relative movement
 alt-q = 'workspace prev'
+alt-shift-q = 'move-node-to-workspace prev'
 alt-w = 'workspace next'
+alt-shift-w = 'move-node-to-workspace next'
 
 alt-r = 'mode resize'
 

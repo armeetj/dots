@@ -1,13 +1,28 @@
 return {
   'folke/snacks.nvim',
-  ---@type snacks.Config
-  opts = {
-    image = {},
-    lazygit = {},
-  },
+  priority = 1000,
   config = function()
-    vim.keymap.set('n', '<leader>lg', function()
-      require('snacks').lazygit()
-    end, { desc = 'Open LazyGit with Snacks' })
+    require('snacks').setup {
+      styles = {
+        snacks_image = {
+          relative = 'cursor',
+          border = 'single',
+          focusable = false,
+          backdrop = false,
+          row = 1,
+          col = 1,
+          -- width/height are automatically set by the image size unless specified below
+        },
+      },
+      image = {
+        doc = {
+          enabled = true,
+          inline = false,
+          float = true,
+          max_width = 50,
+          max_height = 50,
+        },
+      },
+    }
   end,
 }

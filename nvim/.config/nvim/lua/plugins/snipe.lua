@@ -1,5 +1,6 @@
 return {
   'leath-dub/snipe.nvim',
+  lazy = false,
   keys = {
     {
       'gb',
@@ -13,6 +14,11 @@ return {
     local snipe = require 'snipe'
 
     snipe.setup {
+      ui = {
+        open_win_override = {
+          border = 'single',
+        },
+      },
       hints = {
         -- Characters to use for hints
         dictionary = '1234567890asfghl;wertyuiop',
@@ -57,12 +63,29 @@ return {
     --
     --
     -- wrap vim ui select with snipe
-    snipe.ui_select_menu = require('snipe.menu'):new { position = 'center' }
-    snipe.ui_select_menu:add_new_buffer_callback(function(m)
-      vim.keymap.set('n', '<esc>', function()
-        m:close()
-      end, { nowait = true, buffer = m.buf })
-    end)
-    vim.ui.select = snipe.ui_select
+    -- snipe.ui_select_menu = require('snipe.menu'):new { position = 'center' }
+    -- snipe.ui_select_menu:add_new_buffer_callback(function(m)
+    --   vim.keymap.set('n', '<esc>', function()
+    --     m:close()
+    --   end, { nowait = true, buffer = m.buf })
+    -- end)
+    -- vim.ui.select = snipe.ui_select
+
+    -- vim.api.nvim_create_autocmd('User', {
+    --   pattern = 'VeryLazy',
+    --   callback = function()
+    --     local snipe = require 'snipe'
+    --
+    --     snipe.ui_select_menu = require('snipe.menu'):new { position = 'center' }
+    --
+    --     snipe.ui_select_menu:add_new_buffer_callback(function(m)
+    --       vim.keymap.set('n', '<esc>', function()
+    --         m:close()
+    --       end, { nowait = true, buffer = m.buf })
+    --     end)
+    --
+    --     vim.ui.select = snipe.ui_select
+    --   end,
+    -- })
   end,
 }
