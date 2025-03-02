@@ -5,9 +5,9 @@ bindsym $mod+$smod+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 set $mod                             Mod1
 set $smod                            Shift
 set $wm_setting_font                 pango:Iosevka Nerd Font, Regular 12
-set $wm_setting_gap_width            10
-set $wm_setting_gap_height           10
-set $wm_setting_border_size          5
+set $wm_setting_gap_inner            10
+set $wm_setting_gap_outer            -10
+set $wm_setting_border_size          2
 set $wm_setting_key_left             h
 set $wm_setting_key_down             j
 set $wm_setting_key_up               k
@@ -18,12 +18,23 @@ set $wm_setting_app_launcher         rofi -show combi
 # set $wm_setting_app_launcher         dmenu_run
 set $wm_setting_app_compositor       picom
 
+# variables :: colors
+set $background #000000
+set $background-alt #121212
+set $foreground #c1c1c1
+set $primary #a06666
+set $secondary #888888
+set $alert #5f8787
+set $disabled #444444
+
 
 # keybinds :: quick launch
 bindsym $mod+space exec $wm_setting_app_launcher
 bindsym $mod+d exec $wm_setting_app_launcher
 bindsym $mod+backslash exec $wm_setting_app_browser
 bindsym $mod+Return exec $wm_setting_app_terminal
+for_window [class=".*"] border pixel $wm_setting_border_size
+hide_edge_borders none
 
 # polybar :: dock / status bar
 # exec_always --no-startup-id killall polybar
@@ -129,13 +140,20 @@ floating_modifier $mod
 bindsym $mod+$smod+q kill
 bindsym $mod+$smod+r restart
 
-# appearance :: font
+# ui :: font
 font $wm_setting_font
 
-# appearance :: gaps and borders
-# gaps inner $wm_setting_gap_width
-# smart_gaps on
-# default_border pixel $wm_setting_border_size
+# ui :: gaps
+gaps inner $wm_setting_gap_inner
+gaps outer $wm_setting_gap_outer
+smart_gaps on
+
+# ui :: borders
+client.focused          $primary $primary $background $primary
+# client.focused_inactive $background $background-alt $foreground $background-alt
+client.unfocused        $primary $secondary $foreground $background-alt
+# client.urgent           $alert $alert $background $alert
+# client.placeholder      $disabled $disabled $background $disabled
 
 # audio :: pulseaudio controls
 bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 1+ unmute"
