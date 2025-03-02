@@ -73,6 +73,9 @@ function aerospacec; nvim ~/.config/aerospace/aerospace.toml; end
 function sketchybarc; nvim ~/.config/sketchybar/sketchybarrc; end
 function lazygitc; nvim ~/.config/lazygit/config.yml; end
 function gitc; nvim ~/.gitconfig; end
+function i3c; nvim ~/.config/i3/config; end
+function picomc; nvim ~/.config/picom/picom.conf; end
+function polybarc; nvim ~/.config/polybar/config.ini; end
 
 # aliases :: environment 
 function uvs; source .venv/bin/activate.fish; end
