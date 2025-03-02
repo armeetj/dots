@@ -18,7 +18,13 @@ return {
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
-      keymap = { preset = 'default' },
+      keymap = {
+        preset = 'default',
+        ['<C-e>'] = { 'hide' },
+        ['<C-Space>'] = { 'show' },
+        ['<C-y>'] = { 'accept' }, -- accept completion
+        ['<Tab>'] = { 'accept' }, -- accept completion
+      },
 
       completion = {
         documentation = {

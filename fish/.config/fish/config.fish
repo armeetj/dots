@@ -7,9 +7,9 @@ set -Ux XDG_CONFIG_HOME "$HOME/.config"
 set -Ux EDITOR "nvim"
 
 # fish :: local config
-if test -f ~/.config/fish/config.local.fish
-    source ~/.config/fish/config.local.fish
-end
+#if test -f ~/.config/fish/config.local.fish
+#    source ~/.config/fish/config.local.fish
+#end
 
 # zoxide :: smarter cd
 zoxide init fish | source
@@ -77,3 +77,7 @@ function gitc; nvim ~/.gitconfig; end
 # aliases :: environment 
 function uvs; source .venv/bin/activate.fish; end
 
+# conda :: init
+#if test -f /Users/armeetjatyani/anaconda3/bin/conda
+#    eval /Users/armeetjatyani/anaconda3/bin/conda "shell.fish" "hook" $argv | source
+#end

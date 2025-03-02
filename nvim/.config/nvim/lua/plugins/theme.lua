@@ -24,7 +24,9 @@ return {
     --
     -- -- colorscheme :: now handled by :Namu colorscheme
     config = function()
-      vim.cmd.colorscheme 'base16-black-metal-marduk'
+      vim.cmd.colorscheme 'base16-black-metal'
+      vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#222222' }) -- for namu fix
+      -- vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#ff0000' }) -- for namu fix
     end,
   },
   { 'atelierbram/Base2Tone-nvim' },

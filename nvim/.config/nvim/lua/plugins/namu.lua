@@ -60,10 +60,10 @@ return {
 
     -- highlights
     -- vim.api.nvim_set_hl(0, 'NamuPreview', { bg = 'red', fg = '#ebdbb2', bold = true }) -- Adjust colors as needed
-    -- vim.api.nvim_set_hl(0, 'NamuParent', { fg = '#fabd2f', bold = true })
-    -- vim.api.nvim_set_hl(0, 'NamuNested', { fg = '#83a598' })
-    -- vim.api.nvim_set_hl(0, 'NamuStyle', { fg = '#d3869b', italic = true })
-    --
+    -- vim.api.nvim_set_hl(0, 'NamuParent', { bg = '#fabd2f', bold = true })
+    -- vim.api.nvim_set_hl(0, 'NamuNested', { bg = '#83a598' })
+    -- vim.api.nvim_set_hl(0, 'NamuStyle', { bg = '#d3869b', italic = true })
+    -- --
     -- vim.api.nvim_set_hl(0, 'NamuPrefixSymbol', { fg = '#d65d0e' })
     -- vim.api.nvim_set_hl(0, 'NamuSymbolFunction', { fg = '#8ec07c' })
   end,

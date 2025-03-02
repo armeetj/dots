@@ -4,8 +4,11 @@ return {
   ---@type Flash.Config
   opts = {
     modes = {
+      char = {
+        enabled = false,
+      },
       search = {
-        enabled = true,
+        enabled = false,
       },
     },
   },
