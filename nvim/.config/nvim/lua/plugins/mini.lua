@@ -26,7 +26,6 @@ return { -- Collection of various small independent plugins/modules
       },
       options = { try_as_border = true, indent_at_cursor = true },
     }
-    require('mini.jump').setup()
     local statusline = require 'mini.statusline'
     statusline.setup { use_icons = vim.g.have_nerd_font }
     ---@diagnostic disable-next-line: duplicate-set-field

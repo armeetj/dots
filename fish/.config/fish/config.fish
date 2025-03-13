@@ -5,11 +5,12 @@
 
 set -Ux XDG_CONFIG_HOME "$HOME/.config"
 set -Ux EDITOR "nvim"
+set -Ux MANPAGER 'nvim +Man!'
 
 # fish :: local config
-#if test -f ~/.config/fish/config.local.fish
-#    source ~/.config/fish/config.local.fish
-#end
+if test -f ~/.config/fish/config.local.fish
+    source ~/.config/fish/config.local.fish
+end
 
 # zoxide :: smarter cd
 zoxide init fish | source
@@ -25,17 +26,17 @@ set -Ux FZF_CTRL_R_OPTS "
   --header 'Press CTRL-Y to copy command into clipboard'"
 
 # fzf :: jobs fg (foreground resume)
-function fzf_fg
-    set job_info (jobs | fzf --height=10 --border --min-height=5 --no-info --prompt="Select job: ")
-
-    set job (echo $job_info | awk '{print $1}' | tr -d '[]')  # Extract job ID without brackets
-    if test -n "$job"
-        commandline -f repaint  # Redraw command line after fzf
-        fg %$job
-    end
-end
-
-bind \cj fzf_fg
+#function fzf_fg
+#    set job_info (jobs | fzf --height=10 --border --min-height=5 --no-info --prompt="Select job: ")
+#
+#    set job (echo $job_info | awk '{print $1}' | tr -d '[]')  # Extract job ID without brackets
+#    if test -n "$job"
+#        commandline -f repaint  # Redraw command line after fzf
+#        fg %$job
+#    end
+#end
+#
+#bind \cj fzf_fg
 
 # aliases :: executables
 function cd; z $argv; end
@@ -47,6 +48,7 @@ function c; code $argv; end
 function ff; fastfetch $argv; end
 function lg; lazygit $argv; end
 function ls; eza $argv; end
+function e; eza $argv; end
 function l; eza -lah --icons=auto --hyperlink -s type $argv; end
 
 # aliases :: bookmarks 

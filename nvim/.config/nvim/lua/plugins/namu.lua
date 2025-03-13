@@ -5,6 +5,12 @@ return {
       namu_symbols = {
         enable = true,
         options = {
+          current_highlight = {
+            enabled = true, -- Enable custom prefix icon
+            hl_group = 'Visual', -- Default highlight group
+            -- Please keep space after the icon for better viewing
+            prefix_icon = ' ', --icon for current selection, some other example ▎ 󰇙 ┆
+          },
           initially_hidden = false,
           AllowKinds = {
             default = {
@@ -12,13 +18,13 @@ return {
               'Method',
               'Class',
               'Module',
-              -- 'Property',
-              -- 'Variable',
-              -- "Constant",
-              -- "Enum",
-              -- "Interface",
-              -- "Field",
-              -- "Struct",
+              'Property',
+              'Variable',
+              'Constant',
+              'Enum',
+              'Interface',
+              'Field',
+              'Struct',
             },
             go = {
               'Function',
@@ -27,9 +33,9 @@ return {
               'Field', -- For struct fields
               'Interface',
               'Constant',
-              -- "Variable",
+              'Variable',
               'Property',
-              -- "TypeParameter", -- For type parameters if using generics
+              'TypeParameter', -- For type parameters if using generics
             },
             lua = { 'Function', 'Method', 'Table', 'Module' },
             python = { 'Function', 'Class', 'Method' },

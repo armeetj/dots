@@ -52,15 +52,29 @@ return {
           mode = mode or 'n'
           vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
-        map('gt', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype Definition')
-        map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-        map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-        map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-        map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-        map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-        map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+        map('gt', require('fzf-lua').lsp_typedefs, '[G]oto [T]ype Definition')
+        map('gd', require('fzf-lua').lsp_definitions, '[G]oto [D]efinition')
+        map('gD', require('fzf-lua').lsp_declarations, '[G]oto [D]eclaration')
+        map('gr', require('fzf-lua').lsp_references, '[G]oto [R]eferences')
+        map('gI', require('fzf-lua').lsp_implementations, '[G]oto [I]mplementation')
+
+        map('<leader>ds', require('fzf-lua').lsp_document_symbols, '[D]ocument [S]ymbols')
+        map('<leader>ts', require('fzf-lua').treesitter, '[T]ree [S]itter')
+        map('<leader>ws', require('fzf-lua').lsp_live_workspace_symbols, '[W]orkspace [S]ymbols')
         map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-        map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+        map('g.', vim.lsp.buf.code_action, 'Code Actions', { 'n', 'x' })
+
+        -- old keymaps (telescope)
+        -- map('gt', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype Definition')
+        -- map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+        -- map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+        -- map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+        -- map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+        -- map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+        -- map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+        -- map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+        -- map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
 
         -- Autocommands
         local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -139,8 +153,6 @@ return {
       'ruff',
       'gopls',
       'codelldb',
-      'ocaml-lsp',
-      'ocamlformat',
       'texlab',
       'latexindent',
     })

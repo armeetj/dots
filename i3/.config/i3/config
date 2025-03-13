@@ -1,11 +1,9 @@
 # ui :: wallpaper
-exec --no-startup-id feh --bg-scale ~/sync/wallpaper/dark/pixel_dark_village_in_mountains.jpeg
-
-# exit
-bindsym $mod+$smod+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+exec_always --no-startup-id feh --bg-scale ~/sync/wallpaper/dark/pixel_dark_village_in_mountains.jpeg
 
 # variables :: settings
 set $mod                             Mod1
+set $mmod                            Mod4
 set $smod                            Shift
 set $wm_setting_font                 pango:Iosevka Nerd Font, Regular 12
 set $wm_setting_gap_inner            10
@@ -40,11 +38,10 @@ for_window [class=".*"] border pixel $wm_setting_border_size
 hide_edge_borders none
 
 # polybar :: dock / status bar
-# exec_always --no-startup-id killall polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 # picom :: compositor
-exec_always --no-startup-id $wm_setting_app_compositor --config ~/.config/picom/picom.conf --experimental-backends -b
+exec_always --no-startup-id $wm_setting_app_compositor -b
 
 # workspaces :: variables
 set $ws1 "1"
@@ -112,10 +109,10 @@ bindsym $mod+$smod+$wm_setting_key_right    move right
 # workspace :: relative keybinds
 bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+$smod+Tab move workspace to output next
-# bindsym $mod+q workspace prev_on_output
-# bindsym $mod+$smod+q move container to workspace prev_on_output
-# bindsym $mod+w workspace next_on_output
-# bindsym $mod+$smod+w move container to workspace next_on_output
+bindsym $mod+q workspace prev_on_output
+bindsym $mod+$smod+q move container to workspace prev_on_output
+bindsym $mod+w workspace next_on_output
+bindsym $mod+$smod+w move container to workspace next_on_output
 
 # workspace :: layout
 bindsym $mod+comma layout tabbed
@@ -140,8 +137,11 @@ bindsym $mod+$smod+f floating toggle
 bindsym $mod+$smod+space floating toggle
 floating_modifier $mod
 
-bindsym $mod+$smod+q kill
-bindsym $mod+$smod+r restart
+# keybindings :: meta
+bindsym $mmod+$smod+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mmod+q kill
+bindsym $mmod+$smod+r restart
+bindsym $mmod+l exec "i3lock --color=000000 -u"
 
 # ui :: font
 font $wm_setting_font
@@ -158,11 +158,16 @@ client.unfocused        $primary $secondary $foreground $background-alt
 # client.urgent           $alert $alert $background $alert
 # client.placeholder      $disabled $disabled $background $disabled
 
-# audio :: pulseaudio controls
-bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 1+ unmute"
-bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 1- unmute"
-bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle"
+# audio :: pulseaudio controls (with notis)
+bindsym XF86AudioRaiseVolume exec "amixer -q sset Master 5%+ unmute && dunstify -u low -r 9993 -h int:value:$(amixer get Master | grep -o '[0-9]*%') 'Volume Up'"
+bindsym XF86AudioLowerVolume exec "amixer -q sset Master 5%- unmute && dunstify -u low -r 9993 -h int:value:$(amixer get Master | grep -o '[0-9]*%') 'Volume Down'"
+bindsym XF86AudioMute exec "amixer -q sset Master toggle && dunstify -u low -r 9993 'Mute Toggled'
 
+
+# media :: playback controls (playerctl)
+bindsym XF86AudioPlay exec "playerctl play-pause"
+bindsym XF86AudioNext exec "playerctl next"
+bindsym XF86AudioPrev exec "playerctl previous"
 
 # TODO: move into ~/.xprofile
 # ================================================================================
@@ -178,7 +183,6 @@ exec --no-startup-id xset r rate 200 50
 
 exec --no-startup-id xinput set-prop "Darmoshark RF Dongle" "libinput Accel Speed" 0.0
 exec --no-startup-id xinput set-prop "Darmoshark RF Dongle" "libinput Accel Profile Enabled" 0, 1
-
 
 ### Screenshots ###
 bindsym Print exec flameshot gui

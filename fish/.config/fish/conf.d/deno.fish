@@ -1,1 +1,0 @@
-source "/Users/armeetjatyani/.deno/env.fish"

@@ -22,7 +22,8 @@ return {
         python = function(config)
           config.adapters = {
             type = 'executable',
-            command = '/usr/bin/python3', -- Change if needed
+            -- command = '/usr/bin/python3', -- Change if needed
+            command = '.venv/bin/python', -- Change if needed
             args = { '-m', 'debugpy.adapter' },
           }
           require('mason-nvim-dap').default_setup(config)

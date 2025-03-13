@@ -1,3 +1,8 @@
+# opam :: ocaml env
+#status is-interactive; and source (opam env --switch=default --set-switch | psub)
+#status is-interactive; and eval (opam env --switch=default)
+
+
 # bun :: js runtime / package manager
 set -Ux BUN_INSTALL "$HOME/.bun"
 fish_add_path $BUN_INSTALL/bin
