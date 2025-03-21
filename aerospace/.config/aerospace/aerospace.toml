@@ -71,12 +71,12 @@ preset = 'qwerty'
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 10
-inner.vertical = 10
-outer.left = 10
-outer.bottom = 10
-outer.top = 40
-outer.right = 10
+# inner.horizontal = 10
+# inner.vertical = 10
+# outer.left = 10
+# outer.bottom = 10
+# outer.top = 40
+# outer.right = 10
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -155,6 +155,9 @@ alt-s = 'workspace S' # slack
 alt-x = 'workspace X' # X
 alt-y = 'workspace Y' # Y
 alt-z = 'workspace Z' # Z
+
+alt-f = "fullscreen --no-outer-gaps"
+
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-1 = 'move-node-to-workspace 1'

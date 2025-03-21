@@ -1,12 +1,13 @@
 return {
   'ibhagwan/fzf-lua',
+  event = 'VeryLazy',
   dependencies = { 'echasnovski/mini.icons' },
   opts = {},
   config = function()
     local fzf = require 'fzf-lua'
     fzf.setup {
       { 'ivy' },
-      -- { 'telescope', 'ivy' },
+      -- { 'telescope' },
       winopts = {
         border = 'single',
         preview = {

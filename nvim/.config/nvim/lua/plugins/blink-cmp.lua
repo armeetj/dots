@@ -10,6 +10,7 @@ return {
   },
   {
     'saghen/blink.cmp',
+    lazy = true,
     dependencies = {
       'jc-doyle/cmp-pandoc-references',
     },

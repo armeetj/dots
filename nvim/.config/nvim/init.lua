@@ -20,6 +20,8 @@ vim.opt.mouse = 'a'
 vim.opt.showmode = false
 -- status line hack (so avante doesn't show statuslines)
 vim.opt.laststatus = 3
+vim.opt.showcmd = false
+vim.opt.ruler = false
 -- set colorcolumn rulers
 -- vim.opt.colorcolumn = '90'
 
@@ -27,9 +29,13 @@ vim.opt.laststatus = 3
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.opt.clipboard = 'unnamedplus'
-end)
+-- vim.schedule(function()
+--   vim.opt.clipboard = 'unnamedplus'
+-- end)
+vim.keymap.set('n', '<leader>y', '"+y', { desc = 'Yank to system clipboard' })
+vim.keymap.set('n', '<leader>p', '"+p', { desc = 'Paste from system clipboard' })
+vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Yank to system clipboard' })
+vim.keymap.set('v', '<leader>p', '"+p', { desc = 'Paste from system clipboard' })
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -129,17 +135,12 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- FIXME: remove (old chadrc config)
--- put this in your main init.lua file ( before lazy setup )
--- vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46_cache/'
-
 -- lazy setup
 require('lazy').setup({
   -- { import = 'themes' },
   { import = 'plugins' },
 }, {
   ui = {
-    -- border = 'single',
     icons = vim.g.have_nerd_font and {} or {
       cmd = '⌘',
       config = '🛠',
@@ -157,8 +158,3 @@ require('lazy').setup({
     },
   },
 })
-
--- FIXME: remove (old chadrc config)
--- for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
---   dofile(vim.g.base46_cache .. v)
--- end
