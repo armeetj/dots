@@ -44,7 +44,7 @@ return {
           },
           float = {
             source = true,
-            border = 'none',
+            border = 'single',
           },
           update_in_insert = false,
           severity_sort = true,
@@ -112,6 +112,11 @@ return {
           end, '[T]oggle Inlay [H]ints')
         end
       end,
+    })
+
+    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+      border = 'single',
+      -- title = 'hover',
     })
 
     --  extend LSP server capabilities (blink cmp)

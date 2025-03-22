@@ -15,8 +15,8 @@ return {
         'size',
         'mtime',
       },
-
       delete_to_trash = true,
+      watch_for_changes = true,
       skip_confirm_for_simple_edits = true,
       confirmation = {
         border = 'single',
@@ -26,6 +26,10 @@ return {
       },
       ssh = {
         border = 'single',
+      },
+      keymaps = {
+        ['<C-v>'] = { 'actions.select', opts = { vertical = true } },
+        ['<C-s>'] = { 'actions.select', opts = { horizontal = true } },
       },
       keymaps_help = {
         border = 'single',
