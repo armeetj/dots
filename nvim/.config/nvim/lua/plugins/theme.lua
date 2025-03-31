@@ -2,7 +2,8 @@ return {
   {
     'tinted-theming/tinted-vim',
     config = function()
-      vim.cmd.colorscheme 'base16-tokyo-city-light'
+      -- vim.cmd.colorscheme 'base16-tokyo-city-light'
+      vim.cmd.colorscheme 'base16-black-metal-marduk'
     end,
   },
   -- { 'atelierbram/Base2Tone-nvim' },
