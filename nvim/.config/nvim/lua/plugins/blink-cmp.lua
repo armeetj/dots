@@ -24,7 +24,7 @@ return {
         ['<C-e>'] = { 'hide' },
         ['<C-Space>'] = { 'show' },
         ['<C-y>'] = { 'accept' }, -- accept completion
-        ['<Tab>'] = { 'accept' }, -- accept completion
+        -- ['<Tab>'] = { 'accept' }, -- accept completion
       },
       cmdline = {
         completion = {
