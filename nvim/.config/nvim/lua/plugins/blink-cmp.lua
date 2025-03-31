@@ -26,7 +26,13 @@ return {
         ['<C-y>'] = { 'accept' }, -- accept completion
         ['<Tab>'] = { 'accept' }, -- accept completion
       },
-
+      cmdline = {
+        completion = {
+          menu = {
+            auto_show = true,
+          },
+        },
+      },
       completion = {
         documentation = {
           auto_show = true,

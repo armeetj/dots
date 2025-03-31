@@ -74,13 +74,11 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 4
 
 -- Smoother scrolling
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Center cursor after moving down half-page' })
-vim.keymap.set('n', 'H', '<C-u>zz', { desc = 'Center cursor after moving down half-page' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Center cursor after moving down half-page' })
-vim.keymap.set('n', 'L', '<C-d>zz', { desc = 'Center cursor after moving down half-page' })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
