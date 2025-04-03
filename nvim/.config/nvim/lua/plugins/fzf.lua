@@ -6,9 +6,9 @@ return {
   config = function()
     local fzf = require 'fzf-lua'
     fzf.setup {
-      { 'ivy' },
-      -- { 'telescope' },
+      { 'telescope' },
       winopts = {
+        -- fullscreen = true,
         border = 'single',
         preview = {
           border = 'single',

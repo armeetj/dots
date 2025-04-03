@@ -144,3 +144,5 @@ bindkey '^n' history-search-forward
 
 # idk what this does (maybe vim)
 # bindkey -v
+
+. "$HOME/.local/bin/env"
