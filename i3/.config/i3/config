@@ -147,9 +147,9 @@ bindsym $mmod+l exec "i3lock --color=000000 -u"
 font $wm_setting_font
 
 # ui :: gaps
-gaps inner $wm_setting_gap_inner
-gaps outer $wm_setting_gap_outer
-smart_gaps on
+# gaps inner $wm_setting_gap_inner
+# gaps outer $wm_setting_gap_outer
+# smart_gaps on
 
 # ui :: borders
 client.focused          $primary $primary $background $primary
