@@ -3,6 +3,9 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
+-- Enable true color support (recommended)
+vim.opt.termguicolors = true
+
 -- Indentation
 -- expand tab input with spaces characters
 vim.o.expandtab = true

@@ -23,6 +23,7 @@ return {
           max_height = 50,
         },
       },
+      scroll = { enabled = true },
     }
   end,
 }
