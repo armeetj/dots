@@ -7,11 +7,13 @@ return {
     local fzf = require 'fzf-lua'
     fzf.setup {
       { 'telescope' },
+      -- { 'max-perf' },
       winopts = {
-        -- fullscreen = true,
-        border = 'single',
+        fullscreen = true,
+        border = 'none',
         preview = {
           border = 'single',
+          -- delay = 50,
         },
       },
     }
@@ -22,14 +24,14 @@ return {
     -- search <...>
     vim.keymap.set('n', '<leader>sh', fzf.help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sk', fzf.keymaps, { desc = '[S]earch [K]eymaps' })
-    vim.keymap.set('n', '<leader>sf', fzf.files, { desc = '[S]earch [F]iles' })
-    vim.keymap.set('n', '<leader>sc', fzf.commands, { desc = '[S]earch [C]ommand' })
+    vim.keymap.set('n', '<C-p>', fzf.files, { desc = '[S]earch [F]iles' })
+    vim.keymap.set('n', '<C-k>', fzf.commands, { desc = '[S]earch [C]ommand' })
     vim.keymap.set('v', '<leader>sv', fzf.grep_visual, { desc = '[S]earch [V]isual Selection' })
     vim.keymap.set('n', '<leader>sw', fzf.grep_cword, { desc = '[S]earch current [W]ord' })
     vim.keymap.set('n', '<leader>sW', fzf.grep_cWORD, { desc = '[S]earch current [W]ORD' })
-    vim.keymap.set('n', '<leader>sg', fzf.grep_project, { desc = '[S]earch [G]rep Project' })
-    vim.keymap.set('n', '<leader>sd', fzf.diagnostics_document, { desc = '[S]earch Document [D]iagnostics' })
-    vim.keymap.set('n', '<leader>sD', fzf.diagnostics_workspace, { desc = '[S]earch Workspace [D]iagnostics' })
+    vim.keymap.set('n', '<C-g>', fzf.grep_project, { desc = '[S]earch [G]rep Project' })
+    vim.keymap.set('n', '<leader>sD', fzf.diagnostics_document, { desc = '[S]earch Document [D]iagnostics' })
+    vim.keymap.set('n', '<leader>sd', fzf.diagnostics_workspace, { desc = '[S]earch Workspace [D]iagnostics' })
     vim.keymap.set('n', '<leader>sq', fzf.grep_quickfix, { desc = '[S]earch [Q]uickfix' })
     vim.keymap.set('n', '<leader>sj', fzf.jumps, { desc = '[S]earch [J]umplist' })
     vim.keymap.set('n', '<leader>sm', fzf.marks, { desc = '[S]earch [M]arks' })
@@ -37,7 +39,7 @@ return {
     vim.keymap.set('n', '<leader>sR', fzf.resume, { desc = '[S]earch [R]esume' })
     vim.keymap.set('n', '<leader>s.', fzf.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
     vim.keymap.set('n', 'z=', fzf.spell_suggest, { desc = 'Spelling suggestions' })
-    vim.keymap.set('n', '<leader><leader>', fzf.buffers, { desc = '[ ] Find existing buffers' })
+    vim.keymap.set('n', '<C-\\>', fzf.buffers, { desc = '[ ] Find existing buffers' })
 
     -- git specific
     vim.keymap.set('n', '<leader>gf', fzf.git_files, { desc = '[G]it [F]iles' })
@@ -46,7 +48,7 @@ return {
     vim.keymap.set('n', '<leader>gC', fzf.git_commits, { desc = '[G]it [C]ommit <project>' })
     vim.keymap.set('n', '<leader>gst', fzf.git_stash, { desc = '[G]it [S][T]ash' })
 
-    vim.keymap.set('n', '<leader>/', function()
+    vim.keymap.set('n', '<leader>\\', function()
       fzf.grep_curbuf { fzf_opts = { ['--layout'] = 'reverse-list' } }
     end, { desc = '[/] Fuzzily search in current buffer' })
 
