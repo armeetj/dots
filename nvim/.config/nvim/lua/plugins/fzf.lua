@@ -13,7 +13,7 @@ return {
         border = 'none',
         preview = {
           border = 'single',
-          -- delay = 50,
+          delay = 0,
         },
       },
     }
