@@ -32,84 +32,47 @@ return {
     -- },
     picker = {
       ui_select = true,
-      layout = 'custom',
+      layout = {
+        cycle = true,
+        --- Use the default layout or vertical if the window is too narrow
+        preset = function()
+          return vim.o.columns >= 120 and 'custom_default' or 'custom_vertical'
+        end,
+      },
       layouts = {
-        telescope_custom = {
-          reverse = true,
-          layout = {
-            box = 'horizontal',
-            backdrop = false,
-            width = 0.8,
-            height = 0.9,
-            border = 'none',
-            {
-              box = 'vertical',
-              { win = 'list', title = ' Results ', title_pos = 'center', border = 'rounded' },
-              {
-                win = 'input',
-                height = 1,
-                border = 'rounded',
-                title = '{title} {live} {flags}',
-                title_pos = 'center',
-              },
-            },
-            {
-              win = 'preview',
-              title = '{preview:Preview}',
-              width = 0.45,
-              border = 'rounded',
-              title_pos = 'center',
-            },
-          },
-        },
-
-        custom = {
+        custom_default = {
           layout = {
             box = 'horizontal',
             width = 0.999,
-            min_width = 120,
+            min_width = 80,
             height = 0.999,
             {
               box = 'vertical',
               border = 'none',
               title = '{title} {live} {flags}',
-              { win = 'input', height = 1, border = 'none' },
+              { win = 'input', height = 1, border = 'bottom' },
               { win = 'list', border = 'none' },
             },
             { win = 'preview', title = '{preview}', border = 'none', width = 0.5 },
           },
         },
+        custom_vertical = {
+          layout = {
+            backdrop = false,
+            width = 0.999,
+            min_width = 80,
+            height = 0.999,
+            min_height = 30,
+            box = 'vertical',
+            border = 'none',
+            title = '{title} {live} {flags}',
+            title_pos = 'center',
+            { win = 'input', height = 1, border = 'bottom' },
+            { win = 'list', border = 'none' },
+            { win = 'preview', title = '{preview}', height = 0.6, border = 'top' },
+          },
+        },
       },
-      -- layout = "vscode",
-      -- layouts = {
-      -- 	my_telescope_top = {
-      -- 		layout = {
-      -- 			box = "horizontal",
-      -- 			backdrop = false,
-      -- 			width = 0.9,
-      -- 			height = 0.9,
-      -- 			border = "none",
-      -- 			{
-      -- 				box = "vertical",
-      -- 				{
-      -- 					win = "input",
-      -- 					height = 1,
-      -- 					border = "none",
-      -- 					title = "{title} {live} {flags}",
-      -- 					title_pos = "center",
-      -- 				},
-      -- 				{ win = "list", title = " Results ", title_pos = "center", border = "none" },
-      -- 			},
-      -- 			{
-      -- 				win = "preview",
-      -- 				title = "{preview:Preview}",
-      -- 				width = 0.45,
-      -- 				border = "none",
-      -- 				title_pos = "center",
-      -- 			},
-      -- 		},
-      -- 	},
-      -- },
     },
   },
   keys = {
