@@ -1,5 +1,6 @@
 return { -- Collection of various small independent plugins/modules
   'echasnovski/mini.nvim',
+  event = 'VeryLazy', -- Load after UI is ready
   config = function()
     require('mini.ai').setup {
       n_lines = 500,

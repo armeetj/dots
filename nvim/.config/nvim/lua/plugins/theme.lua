@@ -1,12 +1,21 @@
 return {
+  -- {
+  --   'tinted-theming/tinted-vim',
+  --   enabled=false,
+  --   priority = 1000,
+  --   config = function()
+  --     -- vim.cmd.colorscheme 'base16-tokyo-city-light'
+  --     -- vim.cmd.colorscheme 'base16-black-metal-marduk'
+  --     vim.cmd.colorscheme 'base16-default-dark'
+  --   end,
+  -- },
   {
-    'tinted-theming/tinted-vim',
-    enabled=true,
+    'rebelot/kanagawa.nvim',
     priority = 1000,
+    -- event = "VeryLazy",
     config = function()
-      -- vim.cmd.colorscheme 'base16-tokyo-city-light'
-      -- vim.cmd.colorscheme 'base16-black-metal-marduk'
-      vim.cmd.colorscheme 'base16-default-dark'
+      require("kanagawa").load("dragon")
+      -- vim.cmd.colorscheme 'kanagawa-dragon'
     end,
   },
   -- { 'atelierbram/Base2Tone-nvim' },
