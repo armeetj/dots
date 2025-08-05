@@ -23,7 +23,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('g.', vim.lsp.buf.code_action, 'Code Action')
     map('<leader>la', vim.lsp.buf.code_action, 'Code Action')
     map('<leader>lr', vim.lsp.buf.rename, 'Rename all references')
-    -- map("<leader>f", vim.lsp.buf.format, "Format")
+    map('<leader>F', vim.lsp.buf.format, 'Format')
     map('<leader>v', '<cmd>vsplit | lua vim.lsp.buf.definition()<cr>', 'Goto Definition in Vertical Split')
     map('<leader>h', '<cmd>split | lua vim.lsp.buf.definition()<cr>', 'Goto Definition in Horizontal Split')
 

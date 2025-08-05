@@ -1,6 +1,6 @@
 return {
   'chomosuke/typst-preview.nvim',
-  event = "VeryLazy",
+  event = 'VeryLazy',
   lazy = false, -- or ft = 'typst'
   version = '1.*',
   opts = {
