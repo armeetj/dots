@@ -3,6 +3,7 @@ vim.lsp.enable {
   'lua_ls',
   'basedpyright',
   'pyright',
+  'rust-analyzer',
 }
 
 vim.diagnostic.config {
