@@ -4,16 +4,6 @@ return { -- Collection of various small independent plugins/modules
   config = function()
     require('mini.ai').setup {
       n_lines = 500,
-      custom_textobjects = {
-        f = require('mini.ai').gen_spec.treesitter {
-          a = '@function.outer', -- Selects the whole function (with keyword, body, etc.)
-          i = '@function.inner', -- Selects the inside of the function (just the body)
-        },
-        c = require('mini.ai').gen_spec.treesitter {
-          a = '@class.outer', -- Selects the whole function (with keyword, body, etc.)
-          i = '@class.inner', -- Selects the inside of the function (just the body)
-        },
-      },
     }
     require('mini.surround').setup {
       mappings = {

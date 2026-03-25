@@ -11,18 +11,8 @@ return {
       go = { 'goimports', 'golines', 'gofmt' },
     },
     format_on_save = {
-      lsp_fallback = true,
+      lsp_format = 'fallback',
       async = false,
     },
   },
-  -- keys = {
-  --   {
-  --     '<leader>F',
-  --     function()
-  --       require('conform').format { async = true, lsp_format = 'fallback' }
-  --     end,
-  --     mode = '',
-  --     desc = '[F]ormat buffer (sync)',
-  --   },
-  -- },
 }

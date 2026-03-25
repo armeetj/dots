@@ -130,9 +130,16 @@ return {
     {
       '<leader>ff',
       function()
-        Snacks.picker.files()
+        Snacks.picker.files { hidden = true, ignored = true, exclude = { '.venv', 'node_modules', '.git', '__pycache__' } }
       end,
-      desc = 'Find Files',
+      desc = 'Find Files (all)',
+    },
+    {
+      '<leader>fF',
+      function()
+        Snacks.picker.files { hidden = true, ignored = true }
+      end,
+      desc = 'Find Files (no filter)',
     },
     {
       '<leader>fg',
@@ -256,13 +263,6 @@ return {
         Snacks.picker.autocmds()
       end,
       desc = 'Autocmds',
-    },
-    {
-      '<leader>sb',
-      function()
-        Snacks.picker.lines()
-      end,
-      desc = 'Buffer Lines',
     },
     {
       '<leader>sc',

@@ -1,10 +1,26 @@
+-- Python LSP priority: ty > basedpyright > pyright
+local python_lsp = vim.fn.executable('ty') == 1 and 'ty'
+  or vim.fn.executable('basedpyright-langserver') == 1 and 'basedpyright'
+  or 'pyright'
+
 vim.lsp.enable {
   'gopls',
   'lua_ls',
-  'basedpyright',
-  'pyright',
+  python_lsp,
   'rust-analyzer',
+  'vtsls',
 }
+
+-- Space border for seamless padding on floats
+local pad_border = { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' }
+
+-- LSP hover with padding
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = pad_border,
+})
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = pad_border,
+})
 
 vim.diagnostic.config {
   -- virtual_lines = true,
@@ -13,7 +29,7 @@ vim.diagnostic.config {
   update_in_insert = false,
   severity_sort = true,
   float = {
-    border = 'single',
+    border = pad_border,
     source = true,
   },
   -- signs = {

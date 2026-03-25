@@ -18,6 +18,7 @@ return {
         open_win_override = {
           border = 'single',
         },
+        persist_tags = false,
       },
       hints = {
         -- Characters to use for hints

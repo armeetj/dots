@@ -1,3 +1,15 @@
+-- Match FloatBorder bg to NormalFloat for seamless padding
+vim.api.nvim_create_autocmd('ColorScheme', {
+  group = vim.api.nvim_create_augroup('float-border-bg', { clear = true }),
+  callback = function()
+    local bg = vim.api.nvim_get_hl(0, { name = 'NormalFloat' }).bg
+    vim.api.nvim_set_hl(0, 'FloatBorder', { bg = bg })
+  end,
+})
+-- Run once for the initial colorscheme
+local bg = vim.api.nvim_get_hl(0, { name = 'NormalFloat' }).bg
+vim.api.nvim_set_hl(0, 'FloatBorder', { bg = bg })
+
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
@@ -21,22 +33,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('gh', vim.lsp.buf.hover, 'Hover Documentation')
     map('gs', vim.lsp.buf.signature_help, 'Signature Documentation')
     map('g.', vim.lsp.buf.code_action, 'Code Action')
-    map('<leader>la', vim.lsp.buf.code_action, 'Code Action')
     map('<leader>lr', vim.lsp.buf.rename, 'Rename all references')
-    map('<leader>F', vim.lsp.buf.format, 'Format')
+    map('<leader>lf', function()
+      require('conform').format { async = true, lsp_format = 'fallback' }
+    end, 'Format')
     map('<leader>v', '<cmd>vsplit | lua vim.lsp.buf.definition()<cr>', 'Goto Definition in Vertical Split')
     map('<leader>h', '<cmd>split | lua vim.lsp.buf.definition()<cr>', 'Goto Definition in Horizontal Split')
 
-    local function client_supports_method(client, method, bufnr)
-      if vim.fn.has 'nvim-0.11' == 1 then
-        return client:supports_method(method, bufnr)
-      else
-        return client.supports_method(method, { bufnr = bufnr })
-      end
-    end
-
     local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
       local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
 
       -- When cursor stops moving: Highlights all instances of the symbol under the cursor
