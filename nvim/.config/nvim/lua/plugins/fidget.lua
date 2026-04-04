@@ -1,8 +1,11 @@
--- nice minimal LSP status notifications
 return {
-  'j-hui/fidget.nvim',
-  -- tag = '*', -- alternatively, pin this to a specific version, e.g., "v1.6.1"
-  opts = {
-    -- options
-  },
+  source = 'https://github.com/j-hui/fidget.nvim',
+  setup = function()
+    local ok, fidget = pcall(require, 'fidget')
+    if not ok then
+      return
+    end
+
+    fidget.setup({})
+  end,
 }

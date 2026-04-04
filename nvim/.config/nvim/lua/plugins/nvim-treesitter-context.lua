@@ -1,16 +1,23 @@
 return {
-  'nvim-treesitter/nvim-treesitter-context',
-  opts = {
-    enable = true, -- Enable this plugin (can be toggled later via commands)
-    multiwindow = true, -- Enable multiwindow support
-    max_lines = 3, -- No limit on the number of context lines
-    min_window_height = 0, -- No minimum window height required to show context
-    line_numbers = true, -- Show line numbers in context
-    multiline_threshold = 5, -- Max lines for a single context
-    trim_scope = 'outer', -- Trim outer context if max_lines is exceeded
-    mode = 'topline', -- Context based on cursor position
-    separator = nil, -- No separator between context and content
-    zindex = 20, -- Z-index of the context window
-    on_attach = nil, -- Optional: return false to disable attaching for certain buffers
-  },
+  source = 'https://github.com/nvim-treesitter/nvim-treesitter-context',
+  setup = function()
+    local ok, treesitter_context = pcall(require, 'treesitter-context')
+    if not ok then
+      return
+    end
+
+    treesitter_context.setup({
+      enable = true,
+      multiwindow = true,
+      max_lines = 3,
+      min_window_height = 0,
+      line_numbers = true,
+      multiline_threshold = 5,
+      trim_scope = 'outer',
+      mode = 'topline',
+      separator = nil,
+      zindex = 20,
+      on_attach = nil,
+    })
+  end,
 }

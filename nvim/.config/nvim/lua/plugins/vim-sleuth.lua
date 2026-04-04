@@ -1,3 +1,3 @@
 return {
-  'tpope/vim-sleuth',
+  source = 'https://github.com/tpope/vim-sleuth',
 }

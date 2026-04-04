@@ -1,17 +1,67 @@
 return {
-  'stevearc/oil.nvim',
-  ---@module 'oil'
-  ---@type oil.SetupOpts
-  -- Optional dependencies
-  dependencies = { { 'echasnovski/mini.icons', opts = {} } },
-  -- dependencies = { 'nvim-tree/nvim-web-devicons' }, -- use if prefer nvim-web-devicons
-  --
-  config = function()
-    require('oil').setup {
+  source = 'https://github.com/stevearc/oil.nvim',
+  setup = function()
+    local ok, oil = pcall(require, 'oil')
+    if not ok then
+      return
+    end
+
+    local function set_permissions_highlights()
+      vim.api.nvim_set_hl(0, 'OilPermissionsRead', { link = 'String' })
+      vim.api.nvim_set_hl(0, 'OilPermissionsWrite', { link = 'WarningMsg' })
+      vim.api.nvim_set_hl(0, 'OilPermissionsExecute', { link = 'Function' })
+      vim.api.nvim_set_hl(0, 'OilPermissionsNone', { link = 'Comment' })
+    end
+
+    set_permissions_highlights()
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      group = vim.api.nvim_create_augroup('oil-permissions-highlights', { clear = true }),
+      callback = set_permissions_highlights,
+    })
+
+    pcall(function()
+      local columns = require('oil.columns')
+      local constants = require('oil.constants')
+      local permissions = require('oil.adapters.files.permissions')
+      local FIELD_META = constants.FIELD_META
+
+      columns.register('permissions_color', {
+        require_stat = true,
+        render = function(entry)
+          local meta = entry[FIELD_META]
+          local stat = meta and meta.stat
+          if not stat then
+            return columns.EMPTY
+          end
+
+          local value = permissions.mode_to_str(stat.mode)
+          local highlights = {}
+          for i = 1, #value do
+            local char = value:sub(i, i)
+            local group = 'OilPermissionsNone'
+            if char == 'r' then
+              group = 'OilPermissionsRead'
+            elseif char == 'w' then
+              group = 'OilPermissionsWrite'
+            elseif char:match('[xstST]') then
+              group = 'OilPermissionsExecute'
+            end
+            highlights[#highlights + 1] = { group, i - 1, i }
+          end
+
+          return { value, highlights }
+        end,
+        parse = function(line)
+          return permissions.parse(line)
+        end,
+      })
+    end)
+
+    oil.setup({
       view_options = { show_hidden = true },
       columns = {
         'icon',
-        'permissions',
+        'permissions_color',
         'size',
         'mtime',
       },
@@ -19,13 +69,13 @@ return {
       watch_for_changes = true,
       skip_confirm_for_simple_edits = true,
       confirmation = {
-        border = 'single',
+        border = 'none',
       },
       progress = {
-        border = 'single',
+        border = 'none',
       },
       ssh = {
-        border = 'single',
+        border = 'none',
       },
       keymaps = {
         ['gr'] = 'actions.refresh',
@@ -47,9 +97,10 @@ return {
       },
       use_default_keymaps = false,
       keymaps_help = {
-        border = 'single',
+        border = 'none',
       },
-    }
-    vim.keymap.set('n', '-', require('oil').open, { desc = 'Open Oil File Explorer' })
+    })
+
+    vim.keymap.set('n', '-', oil.open, { desc = 'Open file explorer' })
   end,
 }

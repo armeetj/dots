@@ -1,1 +1,3 @@
-return { 'bullets-vim/bullets.vim' }
+return {
+  source = 'https://github.com/bullets-vim/bullets.vim',
+}

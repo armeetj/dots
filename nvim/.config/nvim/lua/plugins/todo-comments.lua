@@ -1,7 +1,13 @@
--- Highlight todo, notes, etc in comments
 return {
-  'folke/todo-comments.nvim',
-  event = 'VimEnter',
-  dependencies = { 'nvim-lua/plenary.nvim' },
-  opts = { signs = true },
+  source = 'https://github.com/folke/todo-comments.nvim',
+  setup = function()
+    local ok, todo_comments = pcall(require, 'todo-comments')
+    if not ok then
+      return
+    end
+
+    todo_comments.setup({
+      signs = true,
+    })
+  end,
 }

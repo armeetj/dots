@@ -1,14 +1,14 @@
--- globals
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = false
 
--- opts
 vim.o.laststatus = 3
 vim.o.termguicolors = true
 vim.o.guicursor = 'n-v-c-i:block'
 vim.o.showcmd = false
 vim.o.ruler = false
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
 vim.o.expandtab = true
 vim.o.number = true
 vim.o.relativenumber = true
@@ -23,7 +23,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.smartindent = true
 vim.o.signcolumn = 'yes'
-vim.o.updatetime = 250
+vim.o.updatetime = 100
 vim.o.timeoutlen = 300
 vim.o.splitright = true
 vim.o.splitbelow = true
