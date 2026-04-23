@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+# Yabai configuration - migrated from AeroSpace
+# https://github.com/koekeishiya/yabai
+
+# ===== Global Settings =====
+
+# Binary space partitioning layout (similar to aerospace tiles)
+yabai -m config layout bsp
+
+# Window modifications
+yabai -m config window_placement second_child
+
+# Padding and gaps (commented out in aerospace config, uncomment if needed)
+# yabai -m config top_padding    40
+# yabai -m config bottom_padding 10
+# yabai -m config left_padding   10
+# yabai -m config right_padding  10
+# yabai -m config window_gap     10
+
+# ===== Mouse Settings =====
+
+# Mouse follows focus (from aerospace: on-focus-changed = ['move-mouse window-lazy-center'])
+yabai -m config mouse_follows_focus on
+yabai -m config focus_follows_mouse off
+
+# Mouse actions
+yabai -m config mouse_modifier alt
+yabai -m config mouse_action1 move
+yabai -m config mouse_action2 resize
+
+# Mouse drop action
+yabai -m config mouse_drop_action swap
+
+# Disable insert feedback (red rectangle)
+yabai -m config insert_feedback_color 0x00000000
+
+# ===== Window Settings =====
+
+# Window opacity (optional)
+yabai -m config window_opacity off
+yabai -m config active_window_opacity 1.0
+yabai -m config normal_window_opacity 0.95
+
+# Window borders (aerospace had this commented out)
+# If you want borders, you can use:
+# yabai -m config window_border on
+# yabai -m config window_border_width 5
+# yabai -m config active_window_border_color 0xffa6b6cf
+# yabai -m config normal_window_border_color 0xff494d64
+
+# Window shadows
+yabai -m config window_shadow float
+
+# Split ratios
+yabai -m config auto_balance off
+yabai -m config split_ratio 0.50
+
+# ===== Spaces / Workspaces =====
+
+# Ensure we have enough spaces (create if needed)
+SPACE_COUNT=$(yabai -m query --spaces | jq 'length')
+while [ "$SPACE_COUNT" -lt 16 ]; do
+    yabai -m space --create
+    SPACE_COUNT=$(yabai -m query --spaces | jq 'length')
+done
+
+# Clear any existing labels first
+for i in {1..15}; do
+    yabai -m space $i --label ""
+done
+
+# Labels for spaces (matching aerospace workspaces)
+# Spaces 1-5 remain unlabeled (accessed by number directly)
+yabai -m space 6 --label a
+yabai -m space 7 --label b
+yabai -m space 8 --label c
+yabai -m space 9 --label m
+yabai -m space 10 --label n
+yabai -m space 11 --label o
+yabai -m space 12 --label s
+yabai -m space 13 --label x
+yabai -m space 14 --label y
+yabai -m space 15 --label z
+yabai -m space 16 --label p
+
+# ===== Rules for Specific Applications =====
+
+# Floating windows for system preferences and similar apps
+yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^System Settings$" manage=off
+yabai -m rule --add app="^Archive Utility$" manage=off
+yabai -m rule --add app="^Finder$" manage=off
+yabai -m rule --add app="^Activity Monitor$" manage=off
+yabai -m rule --add app="^Calculator$" manage=off
+yabai -m rule --add app="^Dictionary$" manage=off
+yabai -m rule --add app="^App Store$" manage=off
+
+# Ignore browser Picture-in-Picture pop-out video players
+yabai -m rule --add title="^Picture in Picture$" manage=off sticky=on layer=above
+yabai -m rule --add subrole="^AXSystemDialog$" manage=off sticky=on layer=above
+
+# ===== External Scripts =====
+
+# Sketchybar integration (from aerospace after-startup-command)
+# Make sure sketchybar is running
+# The sketchybar integration will need to be handled via signals
+
+# Signals for sketchybar
+yabai -m signal --add event=space_changed action="sketchybar --trigger yabai_space_change &> /dev/null"
+yabai -m signal --add event=display_changed action="sketchybar --trigger yabai_display_change &> /dev/null"
+yabai -m signal --add event=window_focused action="sketchybar --trigger yabai_window_focus &> /dev/null"
+
+echo "yabai configuration loaded.."
