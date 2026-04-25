@@ -3,10 +3,14 @@
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
+export SPACE_BG_INACTIVE=0x00000000
+export SPACE_BG_DEFAULT=0x33ffffff
+
+sketchybar --add event yabai_window_mode_change
 
 # ==> Appearance
 # https://felixkratz.github.io/SketchyBar/config/bar
-sketchybar --bar position=top height=30 blur_radius=10 color=0xff000000 margin=0 padding_left=15 padding_right=15
+sketchybar --bar position=top height=30 blur_radius=10 color=0x88000000 margin=0 padding_left=15 padding_right=15
 
 # https://felixkratz.github.io/SketchyBar/config/items
 default=(
@@ -20,6 +24,25 @@ default=(
   label.padding_right=4
 )
 sketchybar --default "${default[@]}"
+
+# ==> Window Mode
+sketchybar --add item window_mode left \
+           --set window_mode \
+                drawing=on \
+                width=-1 \
+                update_freq=1 \
+                icon.drawing=off \
+                label="□" \
+                label.font="Iosevka Nerd Font:Bold:16.0" \
+                label.color=0xffffffff \
+                label.padding_left=0 \
+                label.padding_right=5 \
+                label.y_offset=0 \
+                background.drawing=off \
+                padding_left=0 \
+                padding_right=0 \
+                script="$PLUGIN_DIR/window_mode.sh" \
+           --subscribe window_mode yabai_window_mode_change front_app_switched
 
 # ==> Spaces
 spaces_json=$(yabai -m query --spaces)
@@ -36,24 +59,22 @@ for sid in $(jq '.[].index' <<<"$spaces_json"); do
       label.padding_left=4
       label.padding_right=4
       associated_display=active
-      background.color=0x33ffffff
+      background.color="$SPACE_BG_INACTIVE"
       background.corner_radius=0
       background.height=20
       background.padding_left=0
       background.padding_right=0
       background.drawing=off
-      script="$PLUGIN_DIR/space.sh"
-      click_script="yabai -m space --focus $sid"
+      script="$PLUGIN_DIR/space.sh $sid"
     )
 
     sketchybar --add space space."$sid" left \
-               --set space."$sid" "${space[@]}"
+               --set space."$sid" "${space[@]}" \
+               --subscribe space."$sid" mouse.clicked
 done
 
 # ==> Left Items
-sketchybar --add item chevron left \
-           --set chevron icon=:: label.drawing=off \
-           --add item front_app left \
+sketchybar --add item front_app left \
            --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" \
            --subscribe front_app front_app_switched
 
@@ -62,13 +83,134 @@ sketchybar --add item chevron left \
 # https://felixkratz.github.io/SketchyBar/config/events
 
 sketchybar --add item clock right \
-           --set clock update_freq=1 icon=  script="$PLUGIN_DIR/clock.sh" \
+           --set clock update_freq=1 icon.drawing=off script="$PLUGIN_DIR/clock.sh" click_script="$PLUGIN_DIR/clock_click.sh" \
+           --subscribe clock mouse.exited.global \
            --add item volume right \
-           --set volume script="$PLUGIN_DIR/volume.sh" \
-           --subscribe volume volume_change \
+           --set volume script="$PLUGIN_DIR/volume.sh" click_script="$PLUGIN_DIR/volume_click.sh" \
+           --subscribe volume volume_change mouse.exited.global \
            --add item battery right \
            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
-           --subscribe battery system_woke power_source_change
+           --subscribe battery system_woke power_source_change \
+           --add item protonvpn right \
+           --set protonvpn update_freq=5 icon.drawing=off label="VPN" script="$PLUGIN_DIR/protonvpn.sh" click_script="$PLUGIN_DIR/protonvpn_menu.sh" \
+           --subscribe protonvpn mouse.exited.global \
+           --add item tailscale right \
+           --set tailscale update_freq=5 icon.drawing=off label="TS" script="$PLUGIN_DIR/tailscale.sh" click_script="$PLUGIN_DIR/tailscale_click.sh" \
+           --subscribe tailscale mouse.exited.global
+
+popup_defaults=(
+  icon.font="Iosevka Nerd Font:Bold:13.0"
+  label.font="Iosevka Nerd Font:Bold:13.0"
+  icon.color=0xff9aa4b2
+  label.color=0xffffffff
+  icon.padding_left=8
+  icon.padding_right=8
+  label.padding_left=0
+  label.padding_right=8
+  background.drawing=off
+)
+
+sketchybar --set tailscale \
+              popup.align=right \
+              popup.height=24 \
+              popup.blur_radius=10 \
+              popup.background.color=0xdd111111 \
+              popup.background.corner_radius=6 \
+           --add item tailscale.popup.state popup.tailscale \
+           --set tailscale.popup.state "${popup_defaults[@]}" icon="State" label="-" \
+           --add item tailscale.popup.host popup.tailscale \
+           --set tailscale.popup.host "${popup_defaults[@]}" icon="Host" label="-" \
+           --add item tailscale.popup.ip popup.tailscale \
+           --set tailscale.popup.ip "${popup_defaults[@]}" icon="IP" label="-" \
+           --add item tailscale.popup.peer1 popup.tailscale \
+           --set tailscale.popup.peer1 "${popup_defaults[@]}" icon="Peer" label="-" \
+           --add item tailscale.popup.peer2 popup.tailscale \
+           --set tailscale.popup.peer2 "${popup_defaults[@]}" icon="Peer" label="-" \
+           --add item tailscale.popup.peer3 popup.tailscale \
+           --set tailscale.popup.peer3 "${popup_defaults[@]}" icon="Peer" label="-" \
+           --add item tailscale.popup.peer4 popup.tailscale \
+           --set tailscale.popup.peer4 "${popup_defaults[@]}" icon="Peer" label="-" \
+           --add item tailscale.popup.toggle popup.tailscale \
+           --set tailscale.popup.toggle "${popup_defaults[@]}" icon="Action" label="-" label.color=0xff8bd49c click_script="$PLUGIN_DIR/tailscale_toggle.sh"
+
+sketchybar --set protonvpn \
+              popup.align=right \
+              popup.height=24 \
+              popup.blur_radius=10 \
+              popup.background.color=0xdd111111 \
+              popup.background.corner_radius=6 \
+           --add item protonvpn.popup.state popup.protonvpn \
+           --set protonvpn.popup.state "${popup_defaults[@]}" icon="State" label="-" \
+           --add item protonvpn.popup.changed popup.protonvpn \
+           --set protonvpn.popup.changed "${popup_defaults[@]}" icon="Changed" label="-" \
+           --add item protonvpn.popup.toggle popup.protonvpn \
+           --set protonvpn.popup.toggle "${popup_defaults[@]}" icon="Action" label="-" label.color=0xffff7eb6 click_script="$PLUGIN_DIR/protonvpn_toggle.sh"
+
+sketchybar --set volume \
+              popup.align=right \
+              popup.height=24 \
+              popup.blur_radius=10 \
+              popup.background.color=0xdd111111 \
+              popup.background.corner_radius=6 \
+           --add item volume.popup.output_current popup.volume \
+           --set volume.popup.output_current "${popup_defaults[@]}" icon.drawing=off label="Output  -" label.color=0xff9aa4b2 \
+           --add item volume.popup.output1 popup.volume \
+           --set volume.popup.output1 "${popup_defaults[@]}" icon.drawing=off label="-" \
+           --add item volume.popup.output2 popup.volume \
+           --set volume.popup.output2 "${popup_defaults[@]}" icon.drawing=off label="-" \
+           --add item volume.popup.output3 popup.volume \
+           --set volume.popup.output3 "${popup_defaults[@]}" icon.drawing=off label="-" \
+           --add item volume.popup.output4 popup.volume \
+           --set volume.popup.output4 "${popup_defaults[@]}" icon.drawing=off label="-" \
+           --add item volume.popup.output5 popup.volume \
+           --set volume.popup.output5 "${popup_defaults[@]}" icon.drawing=off label="-" \
+           --add item volume.popup.input_current popup.volume \
+           --set volume.popup.input_current "${popup_defaults[@]}" icon.drawing=off label="Input   -" label.color=0xff9aa4b2 \
+           --add item volume.popup.input1 popup.volume \
+           --set volume.popup.input1 "${popup_defaults[@]}" icon.drawing=off label="-" \
+           --add item volume.popup.input2 popup.volume \
+           --set volume.popup.input2 "${popup_defaults[@]}" icon.drawing=off label="-" \
+           --add item volume.popup.input3 popup.volume \
+           --set volume.popup.input3 "${popup_defaults[@]}" icon.drawing=off label="-" \
+           --add item volume.popup.input4 popup.volume \
+           --set volume.popup.input4 "${popup_defaults[@]}" icon.drawing=off label="-" \
+           --add item volume.popup.input5 popup.volume \
+           --set volume.popup.input5 "${popup_defaults[@]}" icon.drawing=off label="-"
+
+calendar_defaults=(
+  icon.drawing=off
+  label.font="Menlo:Bold:13.0"
+  label.color=0xffffffff
+  label.padding_left=8
+  label.padding_right=8
+  background.drawing=off
+)
+
+sketchybar --set clock \
+              popup.align=right \
+              popup.height=22 \
+              popup.blur_radius=10 \
+              popup.background.color=0xdd111111 \
+              popup.background.corner_radius=6 \
+           --add item clock.popup.header popup.clock \
+           --set clock.popup.header "${calendar_defaults[@]}" label="-" label.color=0xff9aa4b2 \
+           --add item clock.popup.weekdays popup.clock \
+           --set clock.popup.weekdays "${calendar_defaults[@]}" label="Su Mo Tu We Th Fr Sa" label.color=0xff9aa4b2 \
+           --add item clock.popup.week1 popup.clock \
+           --set clock.popup.week1 "${calendar_defaults[@]}" label="-" \
+           --add item clock.popup.week2 popup.clock \
+           --set clock.popup.week2 "${calendar_defaults[@]}" label="-" \
+           --add item clock.popup.week3 popup.clock \
+           --set clock.popup.week3 "${calendar_defaults[@]}" label="-" \
+           --add item clock.popup.week4 popup.clock \
+           --set clock.popup.week4 "${calendar_defaults[@]}" label="-" \
+           --add item clock.popup.week5 popup.clock \
+           --set clock.popup.week5 "${calendar_defaults[@]}" label="-" \
+           --add item clock.popup.week6 popup.clock \
+           --set clock.popup.week6 "${calendar_defaults[@]}" label="-" \
+           --add item clock.popup.today popup.clock \
+           --set clock.popup.today "${calendar_defaults[@]}" label="-" label.color=0xffff5f7a drawing=off
 
 ##### Force all scripts to run the first time (never do this in a script) #####
+sketchybar --trigger yabai_window_mode_change
 sketchybar --update
